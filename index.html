@@ -16,6 +16,7 @@
 
 <h1 class="oneline" style="font-weight:700">15 acres. Infinite <em>possibilities</em>.</h1>
 <span class="eyebrow eyebrow--below">Moinabad &middot; 20 km from Hyderabad</span>
+<div class="hero-figure hero-video"><video autoplay muted loop playsinline preload="metadata" poster="assets/video/firefox-hero-poster.jpg" aria-hidden="true"><source src="assets/video/firefox-hero-1080.mp4" type="video/mp4" media="(min-width:900px)"><source src="assets/video/firefox-hero-720.mp4" type="video/mp4"></video></div>
 
 
 </section><section class="wrap"><div class="lead"><h2>Twenty venues. One <em>Address</em>.</h2><p>Weddings, corporate escapes, sport and 100 rooms.</p></div>
@@ -44,6 +45,7 @@
 </div></footer>
 <script>
 (function(){
+ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('.hero-video video').forEach(function(v){v.removeAttribute('autoplay');v.pause();});}
  document.querySelectorAll('.spaces').forEach(function(el){
   var d=false,sx=0,sl=0,mv=false;
   el.addEventListener('mousedown',function(e){if(e.button!==0)return;d=true;mv=false;sx=e.pageX;sl=el.scrollLeft;el.style.cursor='grabbing';document.body.style.userSelect='none';});

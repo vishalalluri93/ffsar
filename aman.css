@@ -308,3 +308,8 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 
 /* --- FINAL type direction: serif headings, sans small descriptions at Regular weight, no gold --- */
 .feat .cap .body,.trio3 .feat .cap .body,.duo .body{font-family:var(--sans);font-weight:400}
+
+/* --- home hero video, treatment B (framed in the page): headline, eyebrow, then the video --- */
+.hero-video{background:var(--ink)}
+.hero-video video{display:block;width:100%;height:clamp(17rem,44vw,32rem);object-fit:cover}
+@media(max-width:820px){ .hero-video video{height:clamp(14rem,60vw,22rem)} }
