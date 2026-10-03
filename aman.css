@@ -192,8 +192,9 @@ footer.foot{border-top:1px solid var(--line);padding-block:clamp(2.4rem,4vw,3.4r
 .trio3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.4rem,2.6vw,2.2rem)}
 .trio3 .feat .fig img{height:clamp(13rem,17vw,15.5rem)}
 .trio3 .feat .cap h3{font-size:clamp(1.25rem,1.6vw,1.5rem)}
-.scrollrail{position:relative;height:1px;background:var(--line);margin-top:clamp(1.1rem,2vw,1.6rem)}
-.scrollrail i{position:absolute;top:0;left:0;height:100%;background:var(--ink)}
+.scrollrail{position:relative;height:1.5rem;margin-top:calc(clamp(1.1rem,2vw,1.6rem) - .75rem);margin-bottom:-.75rem;cursor:pointer;touch-action:none;background:linear-gradient(var(--line),var(--line)) center/100% 1px no-repeat}
+.scrollrail i{position:absolute;top:50%;left:0;height:1px;transform:translateY(-50%);background:var(--ink);transition:height .2s ease}
+.scrollrail:hover i,.scrollrail.on i{height:3px}
 @media(max-width:820px){ .pair--6040,.trio3{grid-template-columns:1fr} }
 
 /* --- doc round 2: dimensions --- */
@@ -329,13 +330,19 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 .site2 .intro{text-align:center;padding-top:clamp(1.2rem,2.4vw,2rem);padding-bottom:clamp(1.4rem,2.6vw,2.2rem)}
 .site2 .intro .eyebrow{display:block;margin-bottom:.8rem}
 .site2 .intro p{margin:.8rem auto 0;max-width:52ch;font-size:.95rem}
-/* gallery strip: mixed wide and tall frames, edge to edge, drag to scroll */
+/* gallery strip: wide (a) and tall (b) frames in an irregular a-a-b-a-a-b rhythm, each a slightly different size,
+   all bottom-aligned, boxed to the page edges (3 Oct 2026). --w/--h are in strip units (--u) */
 .strip-sec{padding-block:0 clamp(2.4rem,4vw,3.4rem)}
-.strip{--pad:clamp(1.3rem,4.5vw,3.4rem);gap:clamp(.7rem,1.2vw,1rem);padding-inline:max(var(--pad),calc((100vw - 1160px)/2 + var(--pad))) var(--pad);align-items:flex-end}
-.strip img{flex:0 0 auto;height:clamp(16rem,30vw,26rem);object-fit:cover;filter:saturate(.85) sepia(.03) contrast(.99) brightness(1.02)}
-.strip img.w{width:clamp(20rem,38vw,34rem)}
-.strip img.t{width:clamp(12rem,21vw,19rem);height:clamp(19rem,36vw,31rem)}
-.strip-rail{--pad:clamp(1.3rem,4.5vw,3.4rem);margin-inline:auto;width:min(calc(100% - 2*var(--pad)),calc(1160px - 2*var(--pad)))}
+.strip,.strip-rail{--pad:clamp(1.3rem,4.5vw,3.4rem);margin-inline:auto;width:min(calc(100% - 2*var(--pad)),calc(1160px - 2*var(--pad)))}
+.strip{--u:clamp(.6rem,.9vw,.8rem);gap:clamp(.7rem,1.2vw,1rem);align-items:flex-end}
+.strip img{flex:0 0 auto;width:calc(var(--w,28)*var(--u));height:calc(var(--h,21)*var(--u));object-fit:cover;filter:saturate(.85) sepia(.03) contrast(.99) brightness(1.02);transition:opacity .45s ease}
+.strip img.cut{opacity:.5}
+.strip .f-mandap{--w:34;--h:26}
+.strip .f-hall{--w:32;--h:25}
+.strip .f-path{--w:19;--h:31}
+.strip .f-lounge{--w:35;--h:25}
+.strip .f-pool{--w:33;--h:26.5}
+.strip .f-amphi{--w:21;--h:29}
 /* alternating near-white panels instead of lines and boxes */
 .site2 .panel{background:var(--panel)}
 .site2 .figures{border:0;background:transparent;padding-block:clamp(2.2rem,3.6vw,3rem)}
@@ -365,8 +372,7 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
   .site2 .duo--flag,.site2 .duo--flag.flip,.site2 .duo--story{grid-template-columns:1fr}
   .site2 .duo--flag.flip .txt{text-align:left}
   .site2 .duo--flag.flip .txt .body{margin-left:0}
-  .strip img.w{width:78vw;height:62vw}
-  .strip img.t{width:52vw;height:70vw}
+  .strip{--u:min(2.3vw,.8rem)}
 }
 /* "what brings you here" paths — four equal ways in (3 Oct 2026) */
 .site2 .paths{padding-top:0;padding-bottom:clamp(2rem,3.4vw,2.8rem)}
