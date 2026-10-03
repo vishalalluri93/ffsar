@@ -17,7 +17,7 @@ h1{font-size:clamp(1.85rem,3vw,2.55rem);line-height:1.12}
 h2{font-size:clamp(1.45rem,2.2vw,1.95rem);line-height:1.18}
 h3{font-size:clamp(1.1rem,1.5vw,1.35rem)}
 p{margin:0;color:var(--ink-soft);font-size:.94rem}
-em{font-style:italic;color:var(--gilt)}
+em{font-style:normal;color:inherit}
 
 /* header */
 header{position:sticky;top:0;z-index:20;background:rgba(241,235,223,.92);backdrop-filter:saturate(120%) blur(8px);border-bottom:1px solid var(--line)}
@@ -306,7 +306,7 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 /* --- doc round 17: home small text weight to match the Discover link (600) --- */
 .p-home .feat .cap .body,.p-home .lead p,.p-home .say p,.p-home .grid-head p,.p-home .facts .head p,.p-home .spaces .cap .desc{font-weight:400}
 
-/* --- type direction: serif headings, sans small descriptions at Regular weight (gilded <em> words restored 3 Oct 2026, Vishal) --- */
+/* --- type direction: serif headings, sans small descriptions at Regular weight no gold (Vishal, 3 Oct 2026: "keep gold off for now"; --gilt kept ready if it returns) --- */
 .feat .cap .body,.trio3 .feat .cap .body,.duo .body{font-family:var(--sans);font-weight:400}
 
 /* --- home hero video, treatment B (framed in the page): headline, eyebrow, then the video --- */
