@@ -62,8 +62,8 @@
 <p class="eq-privacy">Your details go only to the Firefox Sports &amp; Resorts team.</p>
 </div>
 </form>
-<!-- PLACEHOLDER thank-you wording: Vishal is deciding it, including any promise of how soon they are called -->
-<div class="eq-done" id="eq-done" hidden tabindex="-1"><span class="eyebrow">Enquiry sent</span><h2>Thank <em>you</em>.</h2><p>Your enquiry is with our team, and we will call you back.</p></div>
+<!-- Thank-you wording from the ERP brief, second version (3 Oct 2026): received, what happens next, how to reach us sooner; no promised time -->
+<div class="eq-done" id="eq-done" hidden tabindex="-1"><span class="eyebrow">Enquiry sent</span><h2>Thank you<span id="eq-done-name"></span>.</h2><p>We&rsquo;ve received your enquiry. Our events team will contact you as soon as possible on <span id="eq-done-phone"></span>.</p><p>If you&rsquo;d like to reach us sooner, call <a href="tel:+919676716888">+91 96767 16888</a> (weddings) or <a href="tel:+919988435777">+91 99884 35777</a>.</p></div>
 </div></section><section class="wrap contact">
 <span class="eyebrow">Speak to a person</span><h2>Straight <em>through</em>.</h2>
 <div class="desks desks--row">
@@ -115,9 +115,9 @@
 })();
 </script><script>
 (function(){
- /* ERP enquiry address and key: to come from the ERP session. Until set, sending fails on the web
-    (and only pretends to succeed on this machine's local preview, logging what it would send). */
- var CONFIG={endpoint:'',key:''};
+ /* ERP enquiry address. For now Firefox's TEST system, which accepts sends only from http://localhost (ERP brief,
+    3 Oct 2026). Swap in the live address the ERP gives before this goes to production. No key is needed. */
+ var CONFIG={endpoint:'https://erp-ivcnrdhpia-el.a.run.app/enquiry'};
  var f=document.getElementById('enquiry'); if(!f)return;
  var $=function(id){return document.getElementById(id);};
  var t0=Date.now(), MIN_MS=4000, sending=false;
@@ -174,17 +174,18 @@
   p.hp=$('eq-website').value;return p;}
 
  function busy(on){sending=on;f.classList.toggle('sending',on);$('eq-btn').disabled=on;$('eq-btn-t').textContent=on?'Sending…':'Send enquiry';}
- function done(){f.hidden=true;var d=$('eq-done');d.hidden=false;d.focus();d.scrollIntoView({block:'center'});}
- function fail(){busy(false);$('eq-status').innerHTML='Your enquiry did not send. What you typed is still here, so please try again, or call the weddings desk on <a href="tel:+919676716888">+91 96767 16888</a>.';}
+ function spaced(ph){var m=/^\+91(\d{5})(\d{5})$/.exec(ph);return m?'+91 '+m[1]+' '+m[2]:ph;}
+ function done(p){$('eq-done-name').textContent=', '+p.contact_name;$('eq-done-phone').textContent=spaced(p.phone);
+  f.hidden=true;var d=$('eq-done');d.hidden=false;d.focus();d.scrollIntoView({block:'center'});}
+ function fail(){busy(false);$('eq-status').innerHTML='Something went wrong &mdash; please try again or <a href="tel:+919676716888">call us</a>.';}
 
  f.addEventListener('submit',function(e){e.preventDefault();if(sending)return;$('eq-status').textContent='';
   if(!check())return;var p=payload();busy(true);
   setTimeout(function(){
-   if(!CONFIG.endpoint){if(/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)){console.info('[enquiry, local preview only] would send:',p);done();}else fail();return;}
-   var h={'Content-Type':'application/json'};if(CONFIG.key)h['X-Enquiry-Key']=CONFIG.key;
+   p.ms=Date.now()-t0;
    var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){if(ac)ac.abort();},20000);
-   fetch(CONFIG.endpoint,{method:'POST',headers:h,body:JSON.stringify(p),credentials:'omit',cache:'no-store',signal:ac?ac.signal:undefined})
-    .then(function(r){return r.json();}).then(function(j){clearTimeout(to);if(j&&j.ok===true)done();else fail();})
+   fetch(CONFIG.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p),credentials:'omit',cache:'no-store',signal:ac?ac.signal:undefined})
+    .then(function(r){return r.json();}).then(function(j){clearTimeout(to);if(j&&j.ok===true)done(p);else fail();})
     .catch(function(){clearTimeout(to);fail();});
   },Math.max(0,MIN_MS-(Date.now()-t0)));
  });
