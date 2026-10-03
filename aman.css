@@ -92,6 +92,9 @@ section{padding-block:clamp(2.4rem,4.2vw,3.7rem)}
 /* drag carousel */
 .spaces{display:flex;gap:clamp(.9rem,1.6vw,1.35rem);overflow-x:auto;padding-bottom:.7rem;scrollbar-width:none;-ms-overflow-style:none;cursor:grab}
 .spaces::-webkit-scrollbar{display:none}
+/* any frame cut off at either edge fades a little, to show there is more (3 Oct 2026) */
+.spaces>*{transition:opacity .45s ease}
+.spaces>.cut{opacity:.5}
 .spaces figure{flex:0 0 clamp(19rem,25vw,23rem);margin:0}
 .spaces img{width:100%;height:clamp(17rem,23vw,21rem);object-fit:cover}
 .spaces .cap{padding-top:.85rem}
@@ -335,8 +338,7 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 .strip-sec{padding-block:0 clamp(2.4rem,4vw,3.4rem)}
 .strip,.strip-rail{--pad:clamp(1.3rem,4.5vw,3.4rem);margin-inline:auto;width:min(calc(100% - 2*var(--pad)),calc(1160px - 2*var(--pad)))}
 .strip{--u:clamp(.6rem,.9vw,.8rem);gap:clamp(.7rem,1.2vw,1rem);align-items:flex-end}
-.strip img{flex:0 0 auto;width:calc(var(--w,28)*var(--u));height:calc(var(--h,21)*var(--u));object-fit:cover;filter:saturate(.85) sepia(.03) contrast(.99) brightness(1.02);transition:opacity .45s ease}
-.strip img.cut{opacity:.5}
+.strip img{flex:0 0 auto;width:calc(var(--w,28)*var(--u));height:calc(var(--h,21)*var(--u));object-fit:cover;filter:saturate(.85) sepia(.03) contrast(.99) brightness(1.02)}
 .strip .f-mandap{--w:34;--h:26}
 .strip .f-hall{--w:32;--h:25}
 .strip .f-path{--w:19;--h:31}
@@ -419,3 +421,5 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 .site2 .spaces .cap .m,.site2 .where dt,.site2 .statgrid .from,.site2 .foot h4,.site2 .facts li span{font-size:.68rem}
 .site2 .foot h4,.site2 .where dt,.site2 .statgrid .from{color:var(--mist)}
 @media(max-width:820px){ .site2 .statgrid{grid-template-columns:1fr 1fr!important;row-gap:1.6rem} }
+/* phones: carousel cards back to their intended 76vw — a later desktop size rule had been overriding it (3 Oct 2026) */
+@media(max-width:820px){ .spaces figure,.seasonal .spaces figure.wide{flex:0 0 76vw} }
