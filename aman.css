@@ -1,7 +1,7 @@
 
 :root{
   --cream:#F1EBDF; --cream-deep:#EDE6D6; --ink:#1E2932; --ink-soft:#3A444E;
-  --card:#2F3942; --mist:#6A7480; --gold:#B79A5E; --label:#9C855B; --line:#E1DBCE;
+  --card:#2F3942; --mist:#6A7480; --gold:#B79A5E; --label:#9C855B; --line:#E1DBCE; --gilt:#A88A50;
   --serif:'Cormorant Garamond',Georgia,serif; --sans:'Mulish',-apple-system,'Segoe UI',sans-serif;
 }
 *{box-sizing:border-box}
@@ -17,7 +17,7 @@ h1{font-size:clamp(1.85rem,3vw,2.55rem);line-height:1.12}
 h2{font-size:clamp(1.45rem,2.2vw,1.95rem);line-height:1.18}
 h3{font-size:clamp(1.1rem,1.5vw,1.35rem)}
 p{margin:0;color:var(--ink-soft);font-size:.94rem}
-em{font-style:normal;color:inherit}
+em{font-style:italic;color:var(--gilt)}
 
 /* header */
 header{position:sticky;top:0;z-index:20;background:rgba(241,235,223,.92);backdrop-filter:saturate(120%) blur(8px);border-bottom:1px solid var(--line)}
@@ -306,10 +306,82 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 /* --- doc round 17: home small text weight to match the Discover link (600) --- */
 .p-home .feat .cap .body,.p-home .lead p,.p-home .say p,.p-home .grid-head p,.p-home .facts .head p,.p-home .spaces .cap .desc{font-weight:400}
 
-/* --- FINAL type direction: serif headings, sans small descriptions at Regular weight, no gold --- */
+/* --- type direction: serif headings, sans small descriptions at Regular weight (gilded <em> words restored 3 Oct 2026, Vishal) --- */
 .feat .cap .body,.trio3 .feat .cap .body,.duo .body{font-family:var(--sans);font-weight:400}
 
 /* --- home hero video, treatment B (framed in the page): headline, eyebrow, then the video --- */
 .hero-video{background:var(--ink)}
 .hero-video video{display:block;width:100%;height:clamp(17rem,44vw,32rem);object-fit:cover}
 @media(max-width:820px){ .hero-video video{height:clamp(14rem,60vw,22rem)} }
+
+/* --- Home sample, 2 Oct 2026 (look-and-feel pass; scoped to Home until approved for the other pages) --- */
+.p-home{--label:#7A6236;--mist:#545E69;--panel:#F8F4EC}
+.p-home .eyebrow,.p-home .eyebrow--below{color:var(--label)}
+/* readable small text */
+.p-home .feat .cap .lbl,.p-home .duo .lbl,.p-home .spaces .cap .lbl{font-size:.68rem}
+.p-home .figures .l{font-size:.64rem}
+.p-home .lead p,.p-home .say p,.p-home .feat .cap .body,.p-home .duo .body,.p-home .spaces .cap .desc{font-size:.9rem}
+/* hero video pause control */
+.hero-video{position:relative}
+.vidctl{position:absolute;right:.8rem;bottom:.8rem;font:600 .62rem/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#fff;background:rgba(30,41,50,.45);border:1px solid rgba(255,255,255,.55);padding:.6rem .9rem;cursor:pointer;min-height:36px}
+.vidctl:hover,.vidctl:focus-visible{background:rgba(30,41,50,.75)}
+/* centred intro */
+.p-home .intro{text-align:center;padding-top:clamp(1.2rem,2.4vw,2rem);padding-bottom:clamp(1.4rem,2.6vw,2.2rem)}
+.p-home .intro .eyebrow{display:block;margin-bottom:.8rem}
+.p-home .intro p{margin:.8rem auto 0;max-width:52ch;font-size:.95rem}
+/* gallery strip: mixed wide and tall frames, edge to edge, drag to scroll */
+.strip-sec{padding-block:0 clamp(2.4rem,4vw,3.4rem)}
+.strip{--pad:clamp(1.3rem,4.5vw,3.4rem);gap:clamp(.7rem,1.2vw,1rem);padding-inline:max(var(--pad),calc((100vw - 1160px)/2 + var(--pad))) var(--pad);align-items:flex-end}
+.strip img{flex:0 0 auto;height:clamp(16rem,30vw,26rem);object-fit:cover;filter:saturate(.85) sepia(.03) contrast(.99) brightness(1.02)}
+.strip img.w{width:clamp(20rem,38vw,34rem)}
+.strip img.t{width:clamp(12rem,21vw,19rem);height:clamp(19rem,36vw,31rem)}
+.strip-rail{--pad:clamp(1.3rem,4.5vw,3.4rem);margin-inline:auto;width:min(calc(100% - 2*var(--pad)),calc(1160px - 2*var(--pad)))}
+/* alternating near-white panels instead of lines and boxes */
+.p-home .panel{background:var(--panel)}
+.p-home .figures{border:0;background:transparent;padding-block:clamp(2.2rem,3.6vw,3rem)}
+/* flagship pairs: big landscape beside its words, sides alternating */
+.p-home .duo--flag{grid-template-columns:1.45fr 1fr;gap:clamp(1.8rem,4vw,3.6rem)}
+.p-home .duo--flag.flip{grid-template-columns:1fr 1.45fr}
+.p-home .duo--flag .fig img{height:clamp(18rem,34vw,30rem)}
+.p-home .duo--flag h3{font-size:clamp(1.5rem,2.1vw,1.95rem)}
+.p-home .duo--flag.flip .txt{text-align:right}
+.p-home .duo--flag.flip .txt .body{margin-left:auto}
+.p-home .duo--story{grid-template-columns:1fr 1.2fr}
+.p-home .duo--story .fig img{height:clamp(16rem,28vw,24rem)}
+.p-home .duo--story h3{font-size:clamp(1.6rem,2.4vw,2.2rem)}
+.p-home .say .hero-cta{margin-top:1.6rem}
+/* enquire band runs straight into the footer */
+.p-home .enquire{border-bottom:0}
+.p-home footer.foot{margin-top:0}
+/* phone menu: solid, not see-through */
+@media(max-width:820px){ .p-home nav{background:var(--cream);backdrop-filter:none} }
+/* phones: a fixed Call / Enquire bar */
+.mbar{display:none}
+@media(max-width:820px){
+  .mbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);padding-bottom:env(safe-area-inset-bottom)}
+  .mbar a{display:flex;align-items:center;justify-content:center;min-height:54px;font:700 .72rem/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--cream)}
+  .mbar a+a{border-left:1px solid rgba(241,235,223,.25)}
+  .p-home{padding-bottom:54px}
+  .p-home .duo--flag,.p-home .duo--flag.flip,.p-home .duo--story{grid-template-columns:1fr}
+  .p-home .duo--flag.flip .txt{text-align:left}
+  .p-home .duo--flag.flip .txt .body{margin-left:0}
+  .strip img.w{width:78vw;height:62vw}
+  .strip img.t{width:52vw;height:70vw}
+}
+/* Home: "what brings you here" paths — four equal ways in (3 Oct 2026) */
+.p-home .paths{padding-top:0;padding-bottom:clamp(2rem,3.4vw,2.8rem)}
+.paths ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.paths li+li{border-left:1px solid var(--line)}
+.paths a{display:flex;flex-direction:column;height:100%;padding:1.4rem 1.3rem 1.3rem;transition:background .25s}
+.paths a:hover,.paths a:focus-visible{background:var(--panel)}
+.paths .lbl{font-size:.68rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--label)}
+.paths .t{font-family:var(--serif);font-size:clamp(1.15rem,1.45vw,1.3rem);line-height:1.3;color:var(--ink);margin:.55rem 0 1rem}
+.paths .go{margin-top:auto;font-size:.78rem;font-weight:600;color:var(--ink);align-self:flex-start;border-bottom:1px solid rgba(38,51,63,.42);padding-bottom:.3rem}
+.paths a:hover .go{color:var(--gold);border-color:var(--gold)}
+.p-home .occ-line{font-size:.68rem!important;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-top:1rem;line-height:1.9}
+@media(max-width:820px){
+  .paths ul{grid-template-columns:1fr 1fr}
+  .paths li:nth-child(3){border-left:0}
+  .paths li:nth-child(n+3){border-top:1px solid var(--line)}
+  .paths a{padding:1.1rem .9rem}
+}
