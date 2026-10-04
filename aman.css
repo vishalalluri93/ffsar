@@ -316,6 +316,8 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 /* readable small text */
 .site2 .feat .cap .lbl,.site2 .duo .lbl,.site2 .spaces .cap .lbl{font-size:.68rem}
 .site2 .figures .l{font-size:.64rem}
+.site2 .figures.panel{background:var(--panel)}
+.figures .t{font-size:.8rem;line-height:1.45;color:var(--ink-soft);margin:.45rem auto 0;max-width:34ch}
 .site2 .lead p,.site2 .say p,.site2 .feat .cap .body,.site2 .duo .body,.site2 .spaces .cap .desc{font-size:.9rem}
 /* hero video pause control */
 .hero-video{position:relative}
