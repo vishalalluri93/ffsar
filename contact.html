@@ -28,12 +28,12 @@
      so a browser can never put the answers into a URL. -->
 <form class="eq" id="enquiry" novalidate onsubmit="return false">
 <div class="eq-grid">
-<div class="eq-f"><label class="l" for="eq-type">What kind of event?</label><select id="eq-type" aria-describedby="err-type"><option value="" selected disabled>Choose one</option><option value="wedding">Wedding</option><option value="private">Private event</option><option value="corporate">Corporate</option><option value="institution">Institution (school or college)</option><option value="sports">Sports event</option></select><p class="eq-err" id="err-type"></p></div>
+<div class="eq-f"><label class="l" for="eq-type">What kind of event?<span class="req" aria-hidden="true">*</span></label><select id="eq-type" aria-required="true" aria-describedby="err-type"><option value="" selected disabled>Choose one</option><option value="wedding">Wedding</option><option value="private">Private event</option><option value="corporate">Corporate</option><option value="institution">Institution (school or college)</option><option value="sports">Sports event</option></select><p class="eq-err" id="err-type"></p></div>
 </div>
 <div class="eq-grid">
-<div class="eq-f"><label class="l" for="eq-name">Your name</label><input id="eq-name" type="text" autocomplete="name" aria-describedby="err-name"><p class="eq-err" id="err-name"></p></div>
-<div class="eq-f"><label class="l" for="eq-client" id="eq-client-label">Company / group name</label><input id="eq-client" type="text" autocomplete="off" aria-describedby="err-client"><p class="eq-err" id="err-client"></p></div>
-<div class="eq-f"><label class="l" for="eq-phone">Phone number</label><input id="eq-phone" type="tel" inputmode="tel" autocomplete="tel" value="+91 " aria-describedby="err-phone"><p class="eq-err" id="err-phone"></p></div>
+<div class="eq-f"><label class="l" for="eq-name">Your name<span class="req" aria-hidden="true">*</span></label><input id="eq-name" type="text" aria-required="true" autocomplete="name" aria-describedby="err-name"><p class="eq-err" id="err-name"></p></div>
+<div class="eq-f"><label class="l" for="eq-client" id="eq-client-label">Company / family / group name</label><input id="eq-client" type="text" autocomplete="off" aria-describedby="err-client"><p class="eq-err" id="err-client"></p></div>
+<div class="eq-f"><label class="l" for="eq-phone">Phone number<span class="req" aria-hidden="true">*</span></label><input id="eq-phone" type="tel" aria-required="true" inputmode="tel" autocomplete="tel" value="+91 " aria-describedby="err-phone"><p class="eq-err" id="err-phone"></p></div>
 <div class="eq-f"><label class="l" for="eq-guests">Roughly how many guests?</label><input id="eq-guests" type="number" inputmode="numeric" min="1" step="1" autocomplete="off" aria-describedby="err-guests"><p class="eq-err" id="err-guests"></p></div>
 </div>
 <div class="eq-grid eq-split">
@@ -46,12 +46,13 @@
 <p class="eq-more">Tell us more <span>(optional)</span></p>
 <div class="eq-f"><label class="l" for="eq-email">Email</label><input id="eq-email" type="email" autocomplete="email" aria-describedby="err-email"><p class="eq-err" id="err-email"></p></div>
 <div class="eq-f"><label class="l" for="eq-occasion">What&rsquo;s the occasion?</label><input id="eq-occasion" type="text" autocomplete="off" placeholder="e.g. Sangeet, Annual offsite, Sports day"></div>
-<div class="eq-f eq-msg"><label class="l" for="eq-message">Anything else we should know?</label><textarea id="eq-message" rows="3" maxlength="2000"></textarea></div>
+<div class="eq-f eq-msg"><label class="l" for="eq-message">Anything else we should know?</label><textarea id="eq-message" rows="3" maxlength="2000" placeholder="e.g. Number of rooms, food preferences, special requirements"></textarea></div>
 </div>
 </div>
 <div class="eq-hp" aria-hidden="true"><label for="eq-website">Website</label><input id="eq-website" type="text" tabindex="-1" autocomplete="off"></div>
 <div class="eq-send">
-<button class="btn eq-btn" type="submit" id="eq-btn"><span class="eq-spin" aria-hidden="true"></span><span id="eq-btn-t">Send enquiry</span></button>
+<button class="btn eq-btn" type="submit" id="eq-btn" aria-disabled="true" aria-describedby="eq-req"><span class="eq-spin" aria-hidden="true"></span><span id="eq-btn-t">Send enquiry</span></button>
+<p class="eq-req" id="eq-req">* Fields required to send the enquiry</p>
 <p class="eq-status" id="eq-status" role="alert"></p>
 <!-- PLACEHOLDER privacy line: wording goes to Firefox's lawyer; link it to the privacy notice once that page exists -->
 <p class="eq-privacy">Your details go only to the Firefox Sports &amp; Resorts team.</p>
@@ -122,8 +123,15 @@
  function type(){return $('eq-type').value||'';}
  function val(id){return $(id).value.trim();}
  function err(id,msg){var el=$('err-'+id);el.textContent=msg||'';var inp=$('eq-'+id);if(msg)inp.setAttribute('aria-invalid','true');else inp.removeAttribute('aria-invalid');}
- $('eq-type').addEventListener('change',function(){$('eq-client-label').textContent=LABEL[type()]||'Company / group name';err('type');});
- ['name','client','phone','email','guests'].forEach(function(id){$('eq-'+id).addEventListener('input',function(){err(id);});});
+ function relabel(){$('eq-client-label').textContent=LABEL[type()]||'Company / family / group name';}
+ /* send stays greyed out until the three required fields (event type, name, a valid phone number) are complete */
+ function ready(){return !!type()&&!!val('eq-name')&&phoneOk(phone(val('eq-phone')));}
+ function gate(){var ok=ready();$('eq-btn').setAttribute('aria-disabled',ok?'false':'true');$('eq-req').hidden=ok;}
+ $('eq-type').addEventListener('change',function(){relabel();err('type');gate();});
+ ['name','client','phone','email','guests'].forEach(function(id){var el=$('eq-'+id);el.addEventListener('input',function(){err(id);gate();});el.addEventListener('change',gate);});
+ /* the event type is filled in when the visitor arrives from a page that knows it (contact.html?type=wedding etc.) */
+ var qt=new URLSearchParams(location.search).get('type');
+ if(qt&&$('eq-type').querySelector('option[value="'+qt.replace(/[^a-z]/g,'')+'"]')){$('eq-type').value=qt;relabel();}
 
  /* calendar: several days, need not run together. Day keys are built in LOCAL time (yyyy-MM-dd). */
  var picked={}, today=new Date(); today.setHours(0,0,0,0);
@@ -151,12 +159,12 @@
 
  function phone(v){var s=v.replace(/[\s\-().]/g,'');if(/^0?[6-9]\d{9}$/.test(s))s='+91'+s.slice(-10);else if(/^91[6-9]\d{9}$/.test(s))s='+'+s;return s;}
  function phoneOk(s){return /^\+91[6-9]\d{9}$/.test(s)||/^\+(?!91)[1-9]\d{6,14}$/.test(s);}
+ gate(); window.addEventListener('pageshow',gate);
 
- function check(){var bad=[],t=type(),lab=(LABEL[t]||'company or group name').toLowerCase();
+ function check(){var bad=[],t=type();
   ['type','name','client','phone','email','guests'].forEach(function(id){err(id);});
   if(!t){err('type','Choose the kind of event.');bad.push($('eq-type'));}
   if(!val('eq-name')){err('name','Add your name.');bad.push($('eq-name'));}
-  if(!val('eq-client')){err('client','Add the '+lab+'.');bad.push($('eq-client'));}
   if(!phoneOk(phone(val('eq-phone')))){err('phone','Check the phone number. An Indian mobile number has 10 digits after +91.');bad.push($('eq-phone'));}
   var em=val('eq-email');if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){err('email','Check the email address, or leave it blank.');bad.push($('eq-email'));}
   var g=val('eq-guests');if(g&&(!/^\d{1,6}$/.test(g)||+g<1)){err('guests','Enter the number of guests as a whole number.');bad.push($('eq-guests'));}
@@ -168,7 +176,7 @@
   Object.keys(p).forEach(function(k){if(p[k]===''||(Array.isArray(p[k])&&!p[k].length))delete p[k];});
   p.hp=$('eq-website').value;return p;}
 
- function busy(on){sending=on;f.classList.toggle('sending',on);$('eq-btn').disabled=on;$('eq-btn-t').textContent=on?'Sending…':'Send enquiry';}
+ function busy(on){sending=on;f.classList.toggle('sending',on);$('eq-btn').disabled=on;$('eq-btn-t').textContent=on?'Sending…':'Send enquiry';if(!on)gate();}
  function spaced(ph){var m=/^\+91(\d{5})(\d{5})$/.exec(ph);return m?'+91 '+m[1]+' '+m[2]:ph;}
  function done(p){$('eq-done-name').textContent=', '+p.contact_name;$('eq-done-phone').textContent=spaced(p.phone);
   f.hidden=true;var d=$('eq-done');d.hidden=false;d.focus();d.scrollIntoView({block:'center'});}
