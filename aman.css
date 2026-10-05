@@ -531,3 +531,6 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 .eq-btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed}
 .eq-req{margin:0;font-size:.8rem;color:var(--mist)}
 .eq ::placeholder{color:var(--mist);opacity:.75}
+
+/* --- estate: the halls grid shown as photographs only, even gaps (Vishal, 5 Oct 2026) --- */
+.venue-grid--bare{row-gap:clamp(1rem,1.8vw,1.6rem)}
