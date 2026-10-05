@@ -32,7 +32,7 @@
 </div>
 <div class="eq-grid">
 <div class="eq-f"><label class="l" for="eq-name">Your name<span class="req" aria-hidden="true">*</span></label><input id="eq-name" type="text" aria-required="true" autocomplete="name" aria-describedby="err-name"><p class="eq-err" id="err-name"></p></div>
-<div class="eq-f"><label class="l" for="eq-client" id="eq-client-label">Company / family / group name</label><input id="eq-client" type="text" autocomplete="off" aria-describedby="err-client"><p class="eq-err" id="err-client"></p></div>
+<div class="eq-f"><label class="l" for="eq-client">Company / family / group name</label><input id="eq-client" type="text" autocomplete="off" aria-describedby="err-client"><p class="eq-err" id="err-client"></p></div>
 <div class="eq-f"><label class="l" for="eq-phone">Phone number<span class="req" aria-hidden="true">*</span></label><input id="eq-phone" type="tel" aria-required="true" inputmode="tel" autocomplete="tel" value="+91 " aria-describedby="err-phone"><p class="eq-err" id="err-phone"></p></div>
 <div class="eq-f"><label class="l" for="eq-guests">Roughly how many guests?</label><input id="eq-guests" type="number" inputmode="numeric" min="1" step="1" autocomplete="off" aria-describedby="err-guests"><p class="eq-err" id="err-guests"></p></div>
 </div>
@@ -117,21 +117,19 @@
  var f=document.getElementById('enquiry'); if(!f)return;
  var $=function(id){return document.getElementById(id);};
  var t0=Date.now(), MIN_MS=4000, sending=false;
- var LABEL={wedding:'Family name',private:'Family name',corporate:'Company name',institution:'School / college name',sports:'Team or group name'};
  var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
  var DOW=['Su','Mo','Tu','We','Th','Fr','Sa'], DAY=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
  function type(){return $('eq-type').value||'';}
  function val(id){return $(id).value.trim();}
  function err(id,msg){var el=$('err-'+id);el.textContent=msg||'';var inp=$('eq-'+id);if(msg)inp.setAttribute('aria-invalid','true');else inp.removeAttribute('aria-invalid');}
- function relabel(){$('eq-client-label').textContent=LABEL[type()]||'Company / family / group name';}
  /* send stays greyed out until the three required fields (event type, name, a valid phone number) are complete */
  function ready(){return !!type()&&!!val('eq-name')&&phoneOk(phone(val('eq-phone')));}
  function gate(){var ok=ready();$('eq-btn').setAttribute('aria-disabled',ok?'false':'true');$('eq-req').hidden=ok;}
- $('eq-type').addEventListener('change',function(){relabel();err('type');gate();});
+ $('eq-type').addEventListener('change',function(){err('type');gate();});
  ['name','client','phone','email','guests'].forEach(function(id){var el=$('eq-'+id);el.addEventListener('input',function(){err(id);gate();});el.addEventListener('change',gate);});
  /* the event type is filled in when the visitor arrives from a page that knows it (contact.html?type=wedding etc.) */
  var qt=new URLSearchParams(location.search).get('type');
- if(qt&&$('eq-type').querySelector('option[value="'+qt.replace(/[^a-z]/g,'')+'"]')){$('eq-type').value=qt;relabel();}
+ if(qt&&$('eq-type').querySelector('option[value="'+qt.replace(/[^a-z]/g,'')+'"]'))$('eq-type').value=qt;
 
  /* calendar: several days, need not run together. Day keys are built in LOCAL time (yyyy-MM-dd). */
  var picked={}, today=new Date(); today.setHours(0,0,0,0);
