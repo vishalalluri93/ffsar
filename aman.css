@@ -513,7 +513,7 @@ section{padding-block:clamp(2.9rem,4.9vw,4.4rem)}          /* slightly bigger ga
 @media(max-width:520px){ .venue-grid,.venue-grid--2{grid-template-columns:1fr} }
 /* Sport: tournaments as a captioned gallery strip, like the Home strip (4 Oct 2026) */
 .strip-sec--cap{padding-block:clamp(2.9rem,4.9vw,4.4rem)}
-.strip--cap{align-items:flex-start}
+.strip--cap{align-items:flex-end}
 .strip--cap figure{flex:0 0 auto;margin:0;width:calc(var(--w,28)*var(--u))}
 .strip--cap img{display:block;width:100%;height:calc(var(--h,21)*var(--u))}
 .strip--cap figcaption{margin-top:.7rem;font-family:var(--serif);font-size:clamp(1.05rem,1.3vw,1.2rem);line-height:1.3;color:var(--ink);max-width:28ch}
