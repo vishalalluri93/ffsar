@@ -1,0 +1,19 @@
+# Automatic quality check: runs Google Lighthouse on every page whenever the draft is pushed.
+# Results appear on GitHub under Actions; a red cross means a page fell below the agreed scores.
+name: Lighthouse
+on:
+  push:
+    branches: [draft]
+  workflow_dispatch:
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run Lighthouse on every page (3 runs each, phone settings)
+        run: npx --yes @lhci/cli@0.14.x autorun
+        env:
+          LHCI_BUILD_CONTEXT__CURRENT_BRANCH: draft
