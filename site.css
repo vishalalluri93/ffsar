@@ -835,3 +835,10 @@ main > section.outing-day:has(+ .strip-sec--exp):not(#_){padding-bottom:var(--s-
 .outing-events:not(#_),.outing-day > .wrap:not(#_){padding-top:0!important;padding-bottom:0!important}
 /* scroll bar thumb: dark grey, not black (6 Oct 2026, Vishal) */
 .scrollrail i{background:var(--mist)!important}
+
+/* Home: the Moinabad line is the hero video's caption, 17px under the video like every picture caption
+   (7 Oct 2026, Vishal: "treat the moinabad gold line as the caption line for the hero video"). The heading stays put. */
+.p-home .hero--videoonly{padding-bottom:0!important}
+.p-home .hero--videoonly .hero-figure{margin-bottom:1rem!important}
+.p-home .hero--videoonly + .intro .eyebrow{margin-bottom:2.87rem!important}
+@media(min-width:821px){.p-home .hero--videoonly + .intro .eyebrow{margin-bottom:4.6rem!important}}
