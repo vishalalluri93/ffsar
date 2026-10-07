@@ -827,8 +827,7 @@ main > section.panel + section:not(#_),main > section.enquire + section:not(#_){
 main > section:not(.panel):not(.enquire):not(.intro):not(.hero):has(+ section:not(.panel):not(.enquire)):not(#_){padding-bottom:var(--s-edge)!important}
 main > section:not(.panel):not(.enquire) + section:not(.panel):not(.enquire):not(.hero):not(#_){padding-top:0!important}
 .site2 .strip-sec + .paths:not(#_){padding-top:0!important}
-/* Experiences: the two light bands are one colour, so one gap; old extra margins removed (6 Oct 2026) */
-main > section.panel + section.panel.strip-sec--exp:not(#_){padding-top:0!important}
+/* Experiences: day-out cards on a light band, the picture strip on the page colour, "What's on" on a light band again (7 Oct 2026, Vishal) */
 main > section.outing-day:has(+ .strip-sec--exp):not(#_){padding-bottom:var(--s-edge)!important}
 .outing-day .trio3:not(#_){margin-top:0!important}
 .outing-events .duo:not(#_),section .grid-head + .duo:not(#_){margin-top:0!important}
